@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://ju85ry5av48c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_maef2"]
+radius = 9.219544
+
+[node name="Playground" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_maef2")
