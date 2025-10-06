@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpsk1k1b0y71v"]
+
+[ext_resource type="PackedScene" uid="uid://cgrc53ssu66o4" path="res://scenes/Player.tscn" id="1_wwa6v"]
+[ext_resource type="Script" path="res://scripts/Spawner.gd" id="2_c7d8e"]
+[ext_resource type="PackedScene" uid="uid://b5w5d6v3gq3d8" path="res://scenes/Enemy.tscn" id="3_abcde"]
+[ext_resource type="PackedScene" uid="uid://cws7f1v2qyt8d" path="res://scenes/Bullet.tscn" id="4_fghij"]
+[ext_resource type="PackedScene" uid="uid://d1xgyyqgkyq8x" path="res://scenes/ExperienceOrb.tscn" id="5_orb"]
+[ext_resource type="PackedScene" uid="uid://b2xqy7g6t0o8w" path="res://scenes/HUD.tscn" id="6_hud"]
+
+[sub_resource type="Curve2D" id="Curve2D_fghij"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -100, -100, 0, 0, 0, 0, 1252, -100, 0, 0, 0, 0, 1252, 820, 0, 0, 0, 0, -100, 820, 0, 0, 0, 0, -100, -100)
+}
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_wwa6v")]
+position = Vector2(576, 324)
+bullet_scene = ExtResource("4_fghij")
+
+[node name="Spawner" type="Node" parent="."]
+script = ExtResource("2_c7d8e")
+enemy_scene = ExtResource("3_abcde")
+experience_orb_scene = ExtResource("5_orb")
+
+[node name="Timer" type="Timer" parent="Spawner"]
+wait_time = 0.5
+autostart = true
+
+[node name="SpawnPath" type="Path2D" parent="Spawner"]
+curve = SubResource("Curve2D_fghij")
+
+[node name="SpawnLocation" type="PathFollow2D" parent="Spawner/SpawnPath"]
+unique_name_in_owner = true
+position = Vector2(-100, -100)
+rotation = 1.5708
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]
+[connection signal="health_changed" from="Player" to="HUD" method="update_health"]
+[connection signal="experience_changed" from="Player" to="HUD" method="update_experience"]
