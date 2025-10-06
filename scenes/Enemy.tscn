@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5w5d6v3gq3d8"]
+
+[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_c6v2a"]
+[ext_resource type="Texture2D" uid="uid://cvy5a3p162b7k" path="res://icon.svg" id="2_abcde"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xyz12"]
+size = Vector2(128, 128)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_under"]
+bg_color = Color(0.1, 0.1, 0.1, 0.75)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_over"]
+bg_color = Color(0.3, 0.8, 0.3, 1)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_c6v2a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.2, 0.2, 1)
+texture = ExtResource("2_abcde")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xyz12")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = -50.0
+offset_top = -80.0
+offset_right = 50.0
+offset_bottom = -70.0
+theme_override_styles/background = SubResource("StyleBoxFlat_health_under")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_over")
+value = 100.0
+show_percentage = false
+
+[node name="HealthBarTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="HealthBarTimer" to="." method="_on_health_bar_timer_timeout"]
