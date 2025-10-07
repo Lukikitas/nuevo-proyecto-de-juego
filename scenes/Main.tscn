@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpsk1k1b0y71v"]
+[gd_scene load_steps=9 format=3 uid="uid://dpsk1k1b0y71v"]
 
+[ext_resource type="Script" uid="uid://c8x1vuo8i8int" path="res://scenes/main.gd" id="1_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://cgrc53ssu66o4" path="res://scenes/Player.tscn" id="1_wwa6v"]
-[ext_resource type="Script" path="res://scripts/Spawner.gd" id="2_c7d8e"]
+[ext_resource type="Script" uid="uid://b6j7lq58nnixb" path="res://scripts/Spawner.gd" id="2_c7d8e"]
 [ext_resource type="PackedScene" uid="uid://b5w5d6v3gq3d8" path="res://scenes/Enemy.tscn" id="3_abcde"]
 [ext_resource type="PackedScene" uid="uid://cws7f1v2qyt8d" path="res://scenes/Bullet.tscn" id="4_fghij"]
 [ext_resource type="PackedScene" uid="uid://d1xgyyqgkyq8x" path="res://scenes/ExperienceOrb.tscn" id="5_orb"]
@@ -11,8 +12,10 @@
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -100, -100, 0, 0, 0, 0, 1252, -100, 0, 0, 0, 0, 1252, 820, 0, 0, 0, 0, -100, 820, 0, 0, 0, 0, -100, -100)
 }
+point_count = 5
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_nxtc6")
 
 [node name="Player" parent="." instance=ExtResource("1_wwa6v")]
 position = Vector2(576, 324)
@@ -33,10 +36,9 @@ curve = SubResource("Curve2D_fghij")
 [node name="SpawnLocation" type="PathFollow2D" parent="Spawner/SpawnPath"]
 unique_name_in_owner = true
 position = Vector2(-100, -100)
-rotation = 1.5708
 
 [node name="HUD" parent="." instance=ExtResource("6_hud")]
 
-[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]
-[connection signal="health_changed" from="Player" to="HUD" method="update_health"]
 [connection signal="experience_changed" from="Player" to="HUD" method="update_experience"]
+[connection signal="health_changed" from="Player" to="HUD" method="update_health"]
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]
