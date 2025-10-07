@@ -14,6 +14,8 @@ var experience_to_next_level: int = 100
 @onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
+	if bullet_scene == null:
+		printerr("ERROR: La escena de la bala (Bullet Scene) no ha sido asignada en el nodo Player.")
 	add_to_group("player")
 	health = max_health
 	health_changed.emit(health, max_health)
