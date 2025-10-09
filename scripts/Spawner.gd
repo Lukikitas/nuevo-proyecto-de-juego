@@ -20,3 +20,4 @@ func _on_timer_timeout() -> void:
 
 	# Add the enemy to the scene tree, making sure it's a child of the Main scene
 	owner.add_child(enemy)
+#hola

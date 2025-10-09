@@ -1,19 +1,30 @@
 [gd_scene load_steps=4 format=3 uid="uid://d1xgyyqgkyq8x"]
 
-[ext_resource type="Script" path="res://scripts/ExperienceOrb.gd" id="1_55555"]
-[ext_resource type="Texture2D" uid="uid://cvy5a3p162b7k" path="res://icon.svg" id="2_abcde"]
+[sub_resource type="GDScript" id="GDScript_lopvt"]
+script/source = "extends Area2D
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_12345"]
-radius = 12.0
+@export var experience_amount: int = 5
 
-[node name="ExperienceOrb" type="Area2D" script=ExtResource("1_55555")]
-collision_layer = 4
+func _ready() -> void:
+	# Para reconocerlos sin tipos fuertes
+	add_to_group(\"xp_orb\")
+"
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dvw8h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lopvt"]
+size = Vector2(18, 18)
+
+[node name="ExperienceOrb" type="Area2D"]
+collision_layer = 128
 collision_mask = 0
+script = SubResource("GDScript_lopvt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.4, 0.6, 1, 1)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_abcde")
+position = Vector2(4.7683716e-07, 2.3841858e-07)
+scale = Vector2(0.03515625, 0.035156254)
+texture = SubResource("NoiseTexture2D_dvw8h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_12345")
+shape = SubResource("RectangleShape2D_lopvt")

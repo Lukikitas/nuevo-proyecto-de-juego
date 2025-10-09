@@ -1,19 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://cgrc53ssu66o4"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_s4y7e"]
-[ext_resource type="Texture2D" uid="uid://cvy5a3p162b7k" path="res://icon.svg" id="2_5x0j4"]
+[ext_resource type="Script" uid="uid://dsijuiyke2e06" path="res://scripts/Player.gd" id="1_s4y7e"]
+[ext_resource type="Texture2D" uid="uid://c1tp7pqe622b5" path="res://icon.svg" id="2_5x0j4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w1tqg"]
 size = Vector2(64, 64)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_orbarea"]
-radius = 80.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
+radius = 9.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_layer = 1
 collision_mask = 2
 motion_mode = 1
-up_direction = Vector2(0, -1)
 platform_floor_layers = 4294901760
 script = ExtResource("1_s4y7e")
 
@@ -29,11 +27,11 @@ wait_time = 0.5
 autostart = true
 
 [node name="OrbCollector" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
+collision_layer = 128
+collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OrbCollector"]
-shape = SubResource("CircleShape2D_orbarea")
+shape = SubResource("CircleShape2D_v6fml")
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="area_entered" from="OrbCollector" to="." method="_on_orb_collector_area_entered"]
