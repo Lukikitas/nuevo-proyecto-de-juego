@@ -18,5 +18,5 @@ func _on_timer_timeout() -> void:
 
 	enemy.global_position = spawn_location.position
 
-	# Add the enemy to the scene tree
-	get_tree().root.add_child(enemy)
+	# Add the enemy to the scene tree, making sure it's a child of the Main scene
+	owner.add_child(enemy)
