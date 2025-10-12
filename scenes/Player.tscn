@@ -10,9 +10,9 @@ size = Vector2(64, 64)
 radius = 9.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 1
 collision_mask = 2
 motion_mode = 1
-platform_floor_layers = 4294901760
 script = ExtResource("1_s4y7e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -27,8 +27,8 @@ wait_time = 0.5
 autostart = true
 
 [node name="OrbCollector" type="Area2D" parent="."]
-collision_layer = 128
-collision_mask = 128
+collision_layer = 0
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OrbCollector"]
 shape = SubResource("CircleShape2D_v6fml")

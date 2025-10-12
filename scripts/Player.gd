@@ -22,29 +22,22 @@ var experience_to_next_level: int = 100
 
 # --- GODOT METHODS ---
 func _ready() -> void:
-	add_to_group("player")
 	health = max_health
 	health_changed.emit(health, max_health)
 	experience_changed.emit(experience, experience_to_next_level)
-	_setup_shoot_timer()
+	shoot_timer.wait_time = shoot_interval
 
 func _physics_process(delta: float) -> void:
 	velocity = _get_input_direction() * speed
 	move_and_slide()
 
 # --- PRIVATE METHODS ---
-func _setup_shoot_timer() -> void:
-	shoot_timer.wait_time = shoot_interval
-	if not shoot_timer.timeout.is_connected(_on_shoot_timer_timeout):
-		shoot_timer.timeout.connect(_on_shoot_timer_timeout)
-	shoot_timer.start()
-
 func _get_input_direction() -> Vector2:
 	var direction := Vector2.ZERO
-	if Input.is_action_pressed("ui_right"): direction.x += 1
-	if Input.is_action_pressed("ui_left"):  direction.x -= 1
-	if Input.is_action_pressed("ui_down"):  direction.y += 1
-	if Input.is_action_pressed("ui_up"):    direction.y -= 1
+	if Input.is_action_pressed("move_right"): direction.x += 1
+	if Input.is_action_pressed("move_left"):  direction.x -= 1
+	if Input.is_action_pressed("move_down"):  direction.y += 1
+	if Input.is_action_pressed("move_up"):    direction.y -= 1
 	return direction.normalized()
 
 func _find_closest_enemy() -> Node2D:
@@ -65,9 +58,14 @@ func _shoot_at(target: Node2D) -> void:
 		push_warning("Asigna Bullet.tscn en 'bullet_scene' del Player")
 		return
 
+	# Obtener el contenedor de balas de la escena principal
+	var bullet_container = get_tree().current_scene.get_node_or_null("BulletContainer")
+	if not bullet_container:
+		push_error("La escena principal no tiene un nodo 'BulletContainer'")
+		return
+
 	var bullet := bullet_scene.instantiate() as Area2D
-	get_tree().current_scene.add_child(bullet)
-	await bullet.ready
+	bullet_container.add_child(bullet)
 
 	var direction := (target.global_position - global_position).normalized()
 	if bullet.has_method("setup"):
